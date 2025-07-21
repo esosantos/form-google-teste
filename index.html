@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Formulário de Contato Personalizado</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding: 20px;
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 600px;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+        h2 {
+            color: #007bff;
+            margin-bottom: 30px;
+        }
+        .form-label {
+            font-weight: bold;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2 class="text-center">Formulário de Contato</h2>
+        <form id="meuFormulario" action="https://docs.google.com/forms/d/e/1FAIpQLSd92Q_wWgGrZwqe624n2dDhr-qLsFVRvsA6tuKa-J5GJneNLQ/formResponse" method="POST">
+            <div class="mb-3">
+                <label for="nomeCompleto" class="form-label">Nome Completo:</label>
+                <input type="text" class="form-control" id="nomeCompleto" name="entry.200569429" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="telefone" class="form-label">Telefone:</label>
+                <input type="tel" class="form-control" id="telefone" name="entry.1228894203" placeholder="(XX) XXXXX-XXXX" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="email" class="form-label">Email:</label>
+                <input type="email" class="form-control" id="email" name="entry.37027319" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="assunto" class="form-label">Assunto:</label>
+                <input type="text" class="form-control" id="assunto" name="entry.1789313957" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="descrever" class="form-label">Descrever:</label>
+                <textarea class="form-control" id="descrever" name="entry.798008451" rows="5" required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 mt-3">Enviar Mensagem</button>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        document.getElementById('meuFormulario').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const form = event.target;
+            const formData = new FormData(form);
+
+            const params = new URLSearchParams();
+            for (const pair of formData.entries()) {
+                params.append(pair[0], pair[1]);
+            }
+
+            fetch(form.action, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: params.toString()
+            })
+            .then(() => {
+                alert('Seu formulário foi enviado com sucesso para o Google Forms!');
+                form.reset();
+            })
+            .catch(error => {
+                console.error('Erro ao enviar o formulário:', error);
+                alert('Ocorreu um erro ao enviar o formulário. Por favor, tente novamente.');
+            });
+        });
+    </script>
+</body>
+</html>
